@@ -1,6 +1,7 @@
 # compiled output
 /dist
 joueurs/node_modules
+equipes/node_modules
 
 # Logs
 logs
