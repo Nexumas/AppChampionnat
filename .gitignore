@@ -1,5 +1,6 @@
 # compiled output
-/dist
+joueurs/dist
+equipes/dist
 joueurs/node_modules
 equipes/node_modules
 
