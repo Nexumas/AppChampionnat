@@ -1,7 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Patch } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Patch } from '@nestjs/common';
 import { AppService } from './app.service';
 import { Player } from './schemas/player.schemas';
-import { PlayerInterface } from './dto/player.dto';
+import { PlayerDTO, PlayerInterface } from './dto/player.dto';
 
 @Controller("players")
 export class AppController {
@@ -25,5 +25,10 @@ export class AppController {
   @Patch(":id")
   async UpdatePlayerById(@Param('id') id: string, @Body() PlayerInterface: PlayerInterface) {
     return this.appService.updatePlayerById(id, PlayerInterface);
+  }
+
+  @Post()
+  async createPlayer(@Body() createPlayer: PlayerDTO) {
+    return await this.appService.createPlayer(createPlayer);
   }
 }

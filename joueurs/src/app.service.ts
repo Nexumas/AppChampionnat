@@ -46,4 +46,10 @@ export class AppService {
     {firstname: p.firstname, lastname: p.lastname, pseudo: p.pseudo, job: p.job}
     );
   }
+
+  async createPlayer(createPlayer: PlayerDTO): Promise<Player> {
+    const newPlayer = await new this.PlayerDocument(createPlayer);
+    return newPlayer.save();
+  }
+  
 }
