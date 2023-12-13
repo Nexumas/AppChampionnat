@@ -1,13 +1,14 @@
 import { Controller, Delete, Get, Param } from '@nestjs/common';
 import { AppService } from './app.service';
 import { Player } from './schemas/player.schemas';
+import { PlayerInterface } from './dto/player.dto';
 
 @Controller("players")
 export class AppController {
   constructor(private readonly appService: AppService) { }
 
   @Get("all")
-  async getAll(): Promise<Player[]> {
+  async getAll(): Promise<PlayerInterface[]> {
     return await this.appService.findAll();
   }
 
