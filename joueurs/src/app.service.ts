@@ -38,4 +38,9 @@ export class AppService {
 
     return this.PlayerDocument.deleteOne(new ObjectId(id));
   }
+
+  async createPlayer(createPlayer: PlayerDTO): Promise<Player> {
+    const newPlayer = await new this.PlayerDocument(createPlayer);
+    return newPlayer.save();
+  }
 }
