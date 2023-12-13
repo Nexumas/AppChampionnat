@@ -9,11 +9,11 @@ export type PlayerDocument = HydratedDocument<Player>;
 export class Player {
 
   constructor(id: Types.ObjectId, firstname: string, lastname: string, pseudo: string, job: string) {
-    this.id = id, this.firstname = firstname, this.lastname = lastname, this.pseudo = pseudo, this.job = job;
+    this._id = id, this.firstname = firstname, this.lastname = lastname, this.pseudo = pseudo, this.job = job;
   }
 
   @Prop({ type: SchemaTypes.ObjectId })
-  id: Types.ObjectId
+  _id: Types.ObjectId
 
   @Prop()
   firstname: string;
@@ -29,7 +29,7 @@ export class Player {
 
   static convertToPlayerObj(p: PlayerInterface): Player {
     return new Player(
-      new ObjectId(p.id),
+      new ObjectId(p._id),
       p.firstname,
       p.lastname,
       p.pseudo,

@@ -3,7 +3,7 @@ import { ObjectId } from 'mongodb';
 
 
 export interface PlayerInterface {
-    id: string,
+    _id: string,
     firstname: string,
     lastname: string,
     pseudo: string,
@@ -13,8 +13,9 @@ export interface PlayerInterface {
 export class PlayerDTO {
 
     static convertToPlayerDTO(player: Player): PlayerInterface {
+        console.log(player);
         return {
-            id: new ObjectId(player.id).toString(),
+            _id: player._id.toHexString(),
             firstname: player.firstname,
             lastname: player.lastname,
             pseudo: player.pseudo,
