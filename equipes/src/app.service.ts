@@ -5,6 +5,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import { ObjectId } from 'mongodb';
+import { TeamDTO, TeamInterface } from './dto/team.dto';
 
 @Injectable()
 export class AppService {
@@ -31,11 +32,12 @@ export class AppService {
     return this.TeamDocument.deleteOne(new ObjectId(id));
   }
 
-  async findAll(): Promise<Team[]> {
-    let teams = this.TeamDocument.find().exec();
+  async findAll(): Promise<TeamInterface[]> {
+    let res = this.TeamDocument.find().exec();
+    let teams: TeamInterface[] = [];
 
-    if (teams) {
-      for (let t of await teams) {
+    if (res) {
+      for (let t of await res) {
 
         for (let p of t.players) {
 
@@ -46,6 +48,8 @@ export class AppService {
           t.playersObj.push(res.data);
 
         }
+
+        teams.push(TeamDTO.convertToTeamDTO(t));
       }
     }
 

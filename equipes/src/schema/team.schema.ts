@@ -7,6 +7,10 @@ export type TeamDocument = HydratedDocument<Team>;
 @Schema()
 export class Team {
 
+    constructor(id: Types.ObjectId, region: string, coach: string, sub: string, playersObj: Player[]) {
+        this.id = id, this.region = region, this.coach = coach, this.sub = sub, this.playersObj = playersObj;
+    }
+
     @Prop({ type: SchemaTypes.ObjectId })
     id: Types.ObjectId
 
@@ -21,7 +25,7 @@ export class Team {
 
     @Prop()
     players: string[];
-    
+
     @Prop()
     playersObj: Player[];
 }

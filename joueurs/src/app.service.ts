@@ -5,6 +5,7 @@ import { ObjectId } from 'mongodb';
 import { Player } from './schemas/player.schemas';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
+import { PlayerDTO, PlayerInterface } from './dto/player.dto';
 
 @Injectable()
 export class AppService {
@@ -17,8 +18,16 @@ export class AppService {
     return this.PlayerDocument.findById(idObj).exec();
   }
 
-  async findAll(): Promise<Player[]> {
-    return this.PlayerDocument.find().exec();
+  async findAll(): Promise<PlayerInterface[]> {
+    let res = await this.PlayerDocument.find().exec();
+
+    let players: PlayerInterface[] = [];
+
+    for (let p of await res) {
+      players.push(PlayerDTO.convertToPlayerDTO(p));
+    }
+
+    return players;
   }
 
   async deleteById(id: string): Promise<any> {
