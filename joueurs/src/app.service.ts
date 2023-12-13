@@ -39,8 +39,17 @@ export class AppService {
     return this.PlayerDocument.deleteOne(new ObjectId(id));
   }
 
+  async updatePlayerById(id: string, player: PlayerInterface): Promise<any> {
+    let p = Player.convertToPlayerObj(player);
+
+    return this.PlayerDocument.updateOne({id: new ObjectId(id)}, 
+    {firstname: p.firstname, lastname: p.lastname, pseudo: p.pseudo, job: p.job}
+    );
+  }
+
   async createPlayer(createPlayer: PlayerDTO): Promise<Player> {
     const newPlayer = await new this.PlayerDocument(createPlayer);
     return newPlayer.save();
   }
+  
 }
