@@ -6,10 +6,10 @@ import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import { ObjectId } from 'mongodb';
 import { TeamDTO, TeamInterface } from './dto/team.dto';
+import { PlayerDTO } from './dto/player.dto';
 
 @Injectable()
 export class AppService {
-
   constructor(
     @InjectModel(Team.name) private TeamDocument: Model<Team>,
     private http: HttpService
@@ -54,5 +54,10 @@ export class AppService {
     }
 
     return teams;
+  }
+
+  async createTeam(createTeam: PlayerDTO): Promise<Team> {
+    const newPlayer = await new this.TeamDocument(createTeam);
+    return newPlayer.save();
   }
 }

@@ -1,7 +1,8 @@
-import { Controller, Delete, Get, Param, Patch } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 import { Team } from './schema/team.schema';
 import { TeamInterface } from './dto/team.dto';
+import { PlayerDTO } from './dto/player.dto';
 
 @Controller("teams")
 export class AppController {
@@ -20,5 +21,10 @@ export class AppController {
   @Delete(":id")
   async deleteTeamById(@Param('id') id: string) {
     return this.appService.deleteTeamById(id);
+  }
+
+  @Post()
+  async createTeam(@Body() createTeam: PlayerDTO) {
+    return await this.appService.createTeam(createTeam);
   }
 }
