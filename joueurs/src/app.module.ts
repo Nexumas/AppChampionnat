@@ -8,7 +8,7 @@ import { Player, PlayerSchema } from './schemas/player.schemas';
   imports: [//MongooseModule.forRoot('mongodb://admin:admin@localhost:27017/?authMechanism=DEFAULT'), 
   MongooseModule.forRootAsync({
     useFactory: () => ({
-      uri: 'mongodb://admin:admin@localhost:27017/?authMechanism=DEFAULT',
+      uri: 'mongodb://admin:admin@localhost:5001/?authMechanism=DEFAULT',
       dbName: 'AppChampionnat',
     }),
   }),

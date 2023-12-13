@@ -13,6 +13,10 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
+/mongo-entrypoint
+/entry
+/data
+
 # OS
 .DS_Store
 

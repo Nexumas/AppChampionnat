@@ -9,7 +9,7 @@ import { HttpModule } from '@nestjs/axios';
   imports: [//MongooseModule.forRoot('mongodb://admin:admin@localhost:27017/?authMechanism=DEFAULT'), 
     MongooseModule.forRootAsync({
       useFactory: () => ({
-        uri: 'mongodb://admin:admin@localhost:27017/?authMechanism=DEFAULT',
+        uri: 'mongodb://admin:admin@localhost:5001/?authMechanism=DEFAULT',
         dbName: 'AppChampionnat',
       }),
     }),

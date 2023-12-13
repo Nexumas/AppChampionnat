@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { AppService } from './app.service';
 import { Player } from './schemas/player.schemas';
 
@@ -6,10 +6,13 @@ import { Player } from './schemas/player.schemas';
 export class AppController {
   constructor(private readonly appService: AppService) { }
 
-  @Get()
-  async getHello(): Promise<Player[]> {
-    let test = await this.appService.findAll();
+  @Get("all")
+  async getAll(): Promise<Player[]> {
+    return await this.appService.findAll();
+  }
 
-    return test;
+  @Get(":id")
+  async getPlayerById(@Param('id')id: string): Promise<Player> {
+    return this.appService.findById(id);
   }
 }

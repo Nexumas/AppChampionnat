@@ -1,11 +1,15 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, SchemaTypes, Types } from 'mongoose';
 import { Player } from './player.schemas';
 
 export type TeamDocument = HydratedDocument<Team>;
 
 @Schema()
 export class Team {
+
+    @Prop({ type: SchemaTypes.ObjectId })
+    id: Types.ObjectId
+
     @Prop()
     region: string;
 
@@ -17,8 +21,9 @@ export class Team {
 
     @Prop()
     players: string[];
-
-    playersObj: any[];
+    
+    @Prop()
+    playersObj: Player[];
 }
 
 export const TeamsSchema = SchemaFactory.createForClass(Team);
