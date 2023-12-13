@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
+import { ObjectId } from 'mongodb';
 
 @Injectable()
 export class AppService {
@@ -24,6 +25,10 @@ export class AppService {
         }
       }
     }
+  }
+
+  async deleteTeamById(id: string): Promise<any> {
+    return this.TeamDocument.deleteOne(new ObjectId(id));
   }
 
   async findAll(): Promise<Team[]> {
