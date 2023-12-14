@@ -14,6 +14,7 @@ export interface PlayerInterface {
 export class PlayerDTO {
 
     static convertToPlayerDTO(player: Player): PlayerInterface {
+        console.log(player);
         return {
             _id: player._id.toHexString(),
             firstname: player.firstname,

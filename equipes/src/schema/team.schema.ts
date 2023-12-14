@@ -10,7 +10,7 @@ export type TeamDocument = HydratedDocument<Team>;
 @Schema()
 export class Team {
 
-    constructor(id: Types.ObjectId, region: string, coach: string, sub: string, playersObj: Player[]) {
+    constructor(id: Types.ObjectId, region: string, coach: string, sub: string, playersObj: PlayerInterface[]) {
         this._id = id, this.region = region, this.coach = coach, this.sub = sub, this.playersObj = playersObj;
     }
 
@@ -30,7 +30,7 @@ export class Team {
     players: string[];
 
     @Prop()
-    playersObj: Player[];
+    playersObj: PlayerInterface[];
 
     static convertToTeamObj(t: TeamInterface): Team {
         return new Team(
@@ -38,7 +38,7 @@ export class Team {
             t.region,
             t.coach,
             t.sub,
-            t.players ? t.players.map((p: PlayerInterface) => Player.convertToPlayerObj(p)) : []
+            t.players ? t.players: []
         );
     }
 
