@@ -6,7 +6,7 @@ import { Player, PlayerSchema } from './schemas/player.schemas';
 import { HttpModule } from '@nestjs/axios';
 
 @Module({
-  imports: [//MongooseModule.forRoot('mongodb://admin:admin@localhost:27017/?authMechanism=DEFAULT'), 
+  imports: [
     MongooseModule.forRootAsync({
       useFactory: () => ({
         uri: 'mongodb://admin:admin@localhost:5001/?authMechanism=DEFAULT',

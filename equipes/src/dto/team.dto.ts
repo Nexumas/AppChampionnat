@@ -3,7 +3,7 @@ import { PlayerDTO, PlayerInterface } from "./player.dto";
 import { Player } from "src/schema/player.schemas";
 
 export interface TeamInterface {
-    _id: string,
+    _id?: string,
     region: string,
     sub: string,
     coach: string,
@@ -13,7 +13,7 @@ export interface TeamInterface {
 export class TeamDTO {
     static convertToTeamDTO(team: Team) {
         return {
-            _id: team._id.toHexString(),
+            _id: team._id.toHexString() ? team._id.toHexString(): '',
             region: team.region,
             sub: team.sub,
             coach: team.coach,

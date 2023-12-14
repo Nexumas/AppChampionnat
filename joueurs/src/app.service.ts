@@ -35,20 +35,21 @@ export class AppService {
     await firstValueFrom(
       this.http.patch('http://localhost:3001/teams/players/' + id),
     );
-
+    
     return this.PlayerDocument.deleteOne(new ObjectId(id));
   }
 
   async updatePlayerById(id: string, player: PlayerInterface): Promise<any> {
     let p = Player.convertToPlayerObj(player);
 
-    return this.PlayerDocument.updateOne({id: new ObjectId(id)}, 
+    return this.PlayerDocument.updateOne({_id: new ObjectId(id)}, 
     {firstname: p.firstname, lastname: p.lastname, pseudo: p.pseudo, job: p.job}
     );
   }
 
-  async createPlayer(createPlayer: PlayerDTO): Promise<Player> {
-    const newPlayer = await new this.PlayerDocument(createPlayer);
+  async createPlayer(createPlayer: PlayerInterface): Promise<Player> {
+    let p = Player.convertToPlayerObj(createPlayer);
+    const newPlayer = await new this.PlayerDocument(p);
     return newPlayer.save();
   }
   

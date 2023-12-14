@@ -17,18 +17,18 @@ export class AppController {
     return this.appService.findById(id);
   }
 
-  @Delete(":id")
+  @Delete("/delete/:id")
   async deletePlayerById(@Param('id') id: string): Promise<Player> {
     return this.appService.deleteById(id);
   }
 
-  @Patch(":id")
+  @Patch("/update/:id")
   async UpdatePlayerById(@Param('id') id: string, @Body() PlayerInterface: PlayerInterface) {
     return this.appService.updatePlayerById(id, PlayerInterface);
   }
 
-  @Post()
-  async createPlayer(@Body() createPlayer: PlayerDTO) {
+  @Post("/add")
+  async createPlayer(@Body() createPlayer: PlayerInterface) {
     return await this.appService.createPlayer(createPlayer);
   }
 }
