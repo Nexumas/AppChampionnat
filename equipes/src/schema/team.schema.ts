@@ -29,7 +29,6 @@ export class Team {
     @Prop()
     players: string[];
 
-    @Prop()
     playersObj: PlayerInterface[];
 
     static convertToTeamObj(t: TeamInterface): Team {

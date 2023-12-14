@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Team } from './schema/team.schema';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
@@ -22,10 +22,51 @@ export class AppService {
       for (let t of await teams) {
         if (t.players.indexOf(id) !== -1) {
           t.players.splice(t.players.indexOf(id), 1);
-          await this.TeamDocument.updateOne({ id: t.id }, { players: t.players })
+          await this.TeamDocument.updateOne({ _id: t.id }, { players: t.players })
         }
       }
     }
+  }
+
+  async updateTeamById(id: string, team: TeamInterface): Promise<any> {
+    let t = Team.convertToTeamObj(team);
+
+    let updated =  this.TeamDocument.updateOne({ _id: new ObjectId(id) },
+      { region: t.region, coach: t.coach, sub: t.sub, players: t.players });
+
+    return updated;
+  }
+
+  async addPlayerToTeam(id: string, teamId: string): Promise<any> {
+    if (id != null) {
+      let team = await this.TeamDocument.findById(new ObjectId(teamId)).exec();
+
+      if (team._id.toHexString() === teamId) {
+        if(team.players.indexOf(id) == -1){
+          team.players.push(id);
+          return await this.TeamDocument.updateOne({ _id: team._id }, { players: team.players })
+        }
+        return new HttpException('Player already linked to this team', HttpStatus.BAD_REQUEST);;
+      }
+    }
+  }
+
+  async getTeamById(id: string): Promise<TeamInterface> {
+    let team = await this.TeamDocument.findById(new ObjectId(id)).exec();
+
+    for (let p of team.players) {
+
+      const res = await firstValueFrom(
+        this.http.get('http://localhost:3000/players/' + p),
+      );
+
+      if(res){
+        team.playersObj.push(res.data);        
+      }
+
+    }
+
+    return TeamDTO.convertToTeamDTO(team);
   }
 
   async deleteTeamById(id: string): Promise<any> {
@@ -56,8 +97,9 @@ export class AppService {
     return teams;
   }
 
-  async createTeam(createTeam: PlayerDTO): Promise<Team> {
-    const newPlayer = await new this.TeamDocument(createTeam);
+  async createTeam(createTeam: TeamInterface): Promise<Team> {
+    let t = Team.convertToTeamObj(createTeam);
+    const newPlayer = await new this.TeamDocument(t);
     return newPlayer.save();
   }
 }

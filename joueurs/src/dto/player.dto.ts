@@ -3,7 +3,7 @@ import { ObjectId } from 'mongodb';
 
 
 export interface PlayerInterface {
-    _id: string,
+    _id?: string,
     firstname: string,
     lastname: string,
     pseudo: string,
@@ -14,7 +14,7 @@ export class PlayerDTO {
 
     static convertToPlayerDTO(player: Player): PlayerInterface {
         return {
-            _id: player._id.toHexString(),
+            _id: player._id.toHexString() ? player._id.toHexString(): '',
             firstname: player.firstname,
             lastname: player.lastname,
             pseudo: player.pseudo,
