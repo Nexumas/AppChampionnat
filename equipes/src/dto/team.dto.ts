@@ -17,7 +17,7 @@ export class TeamDTO {
             region: team.region,
             sub: team.sub,
             coach: team.coach,
-            players: team.playersObj ? team.playersObj.map((p: Player) => PlayerDTO.convertToPlayerDTO(p)) : []
+            players: team.playersObj ? team.playersObj: []
         }
 
     }
